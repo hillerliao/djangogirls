@@ -1,0 +1,6 @@
+*.pyc
+*~
+_*che__
+db.*
+/static
+.DS_Store
