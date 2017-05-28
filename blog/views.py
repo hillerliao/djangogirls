@@ -6,9 +6,21 @@ from .forms import PostForm
 from rest_framework import viewsets
 from .serializers import PostSerializer
 
+from django_tables2 import RequestConfig
+from .tables import PostTable
+
+# for restful api
 class PostViewSet(viewsets.ModelViewSet):
 	queryset = Post.objects.all().order_by('-published_date')
 	serializer_class = PostSerializer
+
+# for html tables
+def post_table(request):
+	table = PostTable(Post.objects.all())
+	table.order_by = '-id' # 指定默认排序
+	RequestConfig(request).configure(table)
+	# table.paginate(page=request.GET.get('page', 1), per_page=1) # 翻页
+	return render(request, 'blog/post_table.html', {'table': table})
 
 # Create your views here.
 def post_list(request):
