@@ -14,8 +14,13 @@ def crawl_secs():
 	ranks = json.loads(r.text)
 
 	for rank in ranks:
-		sec_id = int(rank['STR_SECODE'])
+		sec_id = (rank['STR_SECODE'])
 		sec_name = rank['STR_SECNAME']
 		gqj_data = rank['GQJ_data']
-		gqj_rank = int(rank['GQJ_rank'])
-		Secs.objects.update_or_create(sec_id=sec_id, sec_name=sec_name, gqj_data=gqj_data,gqj_rank=gqj_rank)
+		gqj_rank = (rank['GQJ_rank'])
+
+		try:
+			Secs.objects.update_or_create(sec_id=sec_id, sec_name=sec_name, gqj_data=gqj_data,gqj_rank=gqj_rank)
+		except Exception as e:
+			print(e)
+		
