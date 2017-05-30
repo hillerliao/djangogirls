@@ -1,18 +1,29 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
-from .models import Post
+from .models import Post, Secs
 from .forms import PostForm
 
 from rest_framework import viewsets
 from .serializers import PostSerializer
 
 from django_tables2 import RequestConfig
-from .tables import PostTable
+from .tables import PostTable, SecsTable
+
+from .crawl_secs import crawl_secs
 
 # for restful api
 class PostViewSet(viewsets.ModelViewSet):
 	queryset = Post.objects.all().order_by('-published_date')
 	serializer_class = PostSerializer
+
+# for html tables of secs
+def secs(request):
+	crawl_secs()
+	table = SecsTable(Secs.objects.all())
+	table.order_by = 'gqj_rank' # 指定默认排序
+	RequestConfig(request).configure(table)
+	# table.paginate(page=request.GET.get('page', 1), per_page=1) # 翻页
+	return render(request, 'blog/secs.html', {'table': table})
 
 # for html tables
 def post_table(request):

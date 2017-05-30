@@ -1,0 +1,21 @@
+{% load render_table from django_tables2 %}
+{% load static %}
+<!doctype html>
+<html>
+    <head>
+    	<style>
+    	.gqj_data, .gqj_rank {text-align:right;}
+        .odd {background-color: rgb(249,249,249);}
+    	</style>
+    	<title>券商排名</title>
+        <meta name="Keywords" content="券商排名,证券公司,券商业绩" />
+        <meta name="Description" content="展示中国证券公司的财务数据、经营数据等排行榜。" />
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+        <!--link rel="stylesheet" href="{% static 'django_tables2/themes/paleblue/css/screen.css' %}" / -->
+
+    </head>
+    <body>
+        {% render_table table %}
+    </body>
+</html>

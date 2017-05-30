@@ -2,6 +2,17 @@ from django.db import models
 from django.utils import timezone
 
 
+# models for secs rank
+class Secs(models.Model):
+    sec_id = models.IntegerField(primary_key=True)
+    sec_name = models.CharField(unique=True, max_length=50, verbose_name='券商名称')
+    gqj_data = models.CharField(max_length=50, verbose_name='成交额(亿)')
+    gqj_rank = models.IntegerField(verbose_name='名次')
+
+    def __str__(self):
+        return self.sec_name
+
+
 class Post(models.Model):
     author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=200,verbose_name='标题')
